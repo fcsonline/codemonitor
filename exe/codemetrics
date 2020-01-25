@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require './engines/git/extractor'
+require './engines/npm/extractor'
+
+Engines::Git::Extractor.new.call
+Engines::Npm::Extractor.new.call
