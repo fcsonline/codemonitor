@@ -11,13 +11,14 @@ module Engines
         git_number_of_lines
       ].freeze
 
-      def call
+      def call(provider)
         return unless requirements?
 
-        METRICS.each do |metric|
-          value = send(metric)
-          puts "#{metric}: #{value}"
-        end
+        metrics = METRICS.map do |metric|
+          [metric, send(metric)]
+        end.to_h
+
+        provider.emit(metrics)
       end
 
       private

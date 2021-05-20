@@ -1,8 +1,14 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require './providers/console'
+
 require './engines/git/extractor'
 require './engines/npm/extractor'
 
-Engines::Git::Extractor.new.call
-Engines::Npm::Extractor.new.call
+provider = Providers::Console.new
+
+Engines::Git::Extractor.new.call(provider)
+Engines::Npm::Extractor.new.call(provider)
+
+provider.send
