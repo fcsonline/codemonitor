@@ -7,12 +7,14 @@ require './providers/datadog'
 require './engines/git/extractor'
 require './engines/npm/extractor'
 require './engines/semgrep/extractor'
+require './engines/rubocop/extractor'
 
 provider = Providers::Console.new
 
 Engines::Git::Extractor.new.call(provider)
 Engines::Npm::Extractor.new.call(provider)
 Engines::Semgrep::Extractor.new.call(provider)
+Engines::Rubocop::Extractor.new.call(provider)
 
 provider.send
 
