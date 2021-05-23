@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require './providers/console'
-require './providers/datadog'
+require_relative '../providers/console'
+require_relative '../providers/datadog'
 
-require './engines/git/extractor'
-require './engines/npm/extractor'
-require './engines/semgrep/extractor'
-require './engines/rubocop/extractor'
+require_relative '../engines/git/extractor'
+require_relative '../engines/npm/extractor'
+require_relative '../engines/semgrep/extractor'
+require_relative '../engines/rubocop/extractor'
 
 provider = Providers::Console.new
 
