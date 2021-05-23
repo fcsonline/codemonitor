@@ -59,7 +59,7 @@ module Engines
       end
 
       def npm_package
-        @npm_package ||= JSON.parse(`cat package.json`)
+        @npm_package ||= JSON.parse(File.read('package.json'))
       end
 
       def npm_audit
