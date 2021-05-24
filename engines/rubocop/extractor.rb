@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pry'
 require 'json'
 
@@ -19,8 +21,8 @@ module Engines
         metrics = METRICS.map do |metric|
           [metric, send(metric)]
         end.to_h
-          .merge(rubocop_by_severity)
-          .merge(rubocop_by_cop_name)
+                         .merge(rubocop_by_severity)
+                         .merge(rubocop_by_cop_name)
 
         provider.emit(metrics)
       end
@@ -50,16 +52,14 @@ module Engines
 
       def rubocop_offenses
         rubocop['files']
-          .map { |file| file['offenses']}
+          .map { |file| file['offenses'] }
           .flatten
       end
 
       def rubocop_by_severity
         rubocop_offenses
-          .inject(Hash.new(0)) do |total, offense|
+          .each_with_object(Hash.new(0)) do |offense, total|
             total[offense['severity']] += 1
-
-            total
           end.map do |key, value|
             ["rubocop_severity_#{key}", value]
           end.to_h
@@ -67,17 +67,15 @@ module Engines
 
       def rubocop_by_cop_name
         rubocop_offenses
-          .inject(Hash.new(0)) do |total, offense|
+          .each_with_object(Hash.new(0)) do |offense, total|
             total[offense['cop_name']] += 1
-
-            total
           end.map do |key, value|
             ["rubocop_cop_#{clean(key)}", value] if value >= threshold
           end.compact.to_h
       end
 
       def clean(key)
-        key.gsub(/[-,.\/ ]/, '_').downcase
+        key.gsub(%r{[-,./ ]}, '_').downcase
       end
     end
   end

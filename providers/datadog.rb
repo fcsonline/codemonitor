@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dogapi'
 
 module Providers
@@ -18,7 +20,7 @@ module Providers
         pending.each do |metric, value|
           metric = metric_prefix + metric
           puts "#{metric}: #{value}"
-          datadog_client.emit_point(metric, value, :type => 'gauge')
+          datadog_client.emit_point(metric, value, type: 'gauge')
         end
       end
 

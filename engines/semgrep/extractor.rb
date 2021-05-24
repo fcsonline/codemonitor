@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pry'
 require 'json'
 
@@ -46,10 +48,8 @@ module Engines
 
       def semgrep_by_check_id
         semgrep['results']
-          .inject(Hash.new(0)) do |total, offense|
+          .each_with_object(Hash.new(0)) do |offense, total|
             total[offense['check_id']] += 1
-
-            total
           end.map do |key, value|
             ["semgrep_check_#{clean(key)}", value] if value >= threshold
           end.to_h

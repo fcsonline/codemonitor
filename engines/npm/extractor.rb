@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pry'
 require 'json'
 
@@ -69,7 +71,9 @@ module Engines
       end
 
       def npm_audit_by_severity
-        npm_audit['advisories'].map {|key, value| value['severity']}.inject(Hash.new(0)) { |total, e| total[e] += 1; total}
+        npm_audit['advisories']
+          .map { |_key, value| value['severity'] }
+          .each_with_object(Hash.new(0)) { |e, total| total[e] += 1; }
       end
     end
   end
