@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../../lib/shell'
+
 module Engines
   module Git
     class Extractor
@@ -30,31 +32,47 @@ module Engines
       end
 
       def git_number_of_commits
-        `git log --format='%h' | wc -l`
+        Shell.run("git log --format='%h'").lines.count
       end
 
       def git_number_of_branches
-        `git ls-remote -q | grep heads | wc -l`
+        Shell.run('git ls-remote -q')
+          .lines
+          .filter { |line| line =~ %r{\Arefs/heads} }
+          .count
       end
 
       def git_number_of_tags
-        `git ls-remote -q | grep tags | wc -l`
+        Shell.run('git ls-remote -q')
+          .lines
+          .filter { |line| line =~ %r{\Arefs/tags} }
+          .count
       end
 
       def git_number_of_contributors
-        `git log --format='%aN' | sort -u | wc -l`
+        Shell.run("git log --format='%aN'")
+          .lines
+          .sort
+          .uniq
+          .count
       end
 
       def git_number_of_files
-        `git ls-tree -r master --name-only | wc -l`
+        Shell.run('git ls-tree -r master --name-only')
+          .lines
+          .count
       end
 
       def git_number_of_ignores_files
-        `git check-ignore * | wc -l`
+        Shell.run('git check-ignore *').lines.count
       end
 
       def git_number_of_lines
-        `git ls-files | xargs cat | wc -l`
+        Shell.run('git ls-files')
+          .lines
+          .map do |file|
+            File.read(File.expand_path(file.strip, Dir.pwd)).lines.count
+          end.sum
       end
     end
   end

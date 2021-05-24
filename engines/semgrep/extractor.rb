@@ -52,7 +52,7 @@ module Engines
             total[offense['check_id']] += 1
           end.map do |key, value|
             ["semgrep_check_#{clean(key)}", value] if value >= threshold
-          end.to_h
+          end.compact.to_h
       end
 
       def clean(key)

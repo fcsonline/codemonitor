@@ -22,5 +22,8 @@ Style/MultilineBlockChain:
 Layout/LineLength:
   Max: 120
 
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+
 Metrics/BlockLength:
   Max: 100
