@@ -9,6 +9,10 @@ module Engines
         rubocop_number_of_correctable
       ].freeze
 
+      def initialize(threshold: 50)
+        @threshold = threshold
+      end
+
       def call(provider)
         return unless requirements?
 
@@ -22,6 +26,8 @@ module Engines
       end
 
       private
+
+      attr_reader :threshold
 
       def requirements?
         File.exist?('.rubocop.yml')
@@ -66,7 +72,7 @@ module Engines
 
             total
           end.map do |key, value|
-            ["rubocop_cop_#{clean(key)}", value] if value > 50 # TODO: Configurable
+            ["rubocop_cop_#{clean(key)}", value] if value >= threshold
           end.compact.to_h
       end
 
