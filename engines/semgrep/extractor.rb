@@ -9,6 +9,10 @@ module Engines
         semgrep_number_of_errors
       ].freeze
 
+      def initialize(threshold: 50)
+        @threshold = threshold
+      end
+
       def call(provider)
         return unless requirements?
 
@@ -20,6 +24,8 @@ module Engines
       end
 
       private
+
+      attr_reader :threshold
 
       def requirements?
         File.exist?('.semgrep.yml')
@@ -45,7 +51,7 @@ module Engines
 
             total
           end.map do |key, value|
-            ["semgrep_#{clean(key)}", value]
+            ["semgrep_check_#{clean(key)}", value] if value >= threshold
           end.to_h
       end
 
