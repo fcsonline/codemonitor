@@ -1,6 +1,8 @@
 require 'pry'
 require 'json'
 
+require_relative '../../lib/shell'
+
 module Engines
   module Npm
     class Extractor
@@ -18,7 +20,7 @@ module Engines
         return unless requirements?
 
         metrics = METRICS.map do |metric|
-          [metric, send(metric)]
+          [metric, send(metric) || 0]
         end.to_h
 
         provider.emit(metrics)
@@ -63,7 +65,7 @@ module Engines
       end
 
       def npm_audit
-        @npm_audit ||= JSON.parse(`npm audit --json`)
+        @npm_audit ||= JSON.parse(Shell.run('npm audit --json'))
       end
 
       def npm_audit_by_severity

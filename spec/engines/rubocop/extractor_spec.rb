@@ -45,11 +45,8 @@ RSpec.describe Engines::Rubocop::Extractor do
     provider.pending.transform_keys(&:to_sym)
   end
 
-  before do
-    allow(File).to receive(:exist?).with('.rubocop.yml').and_return(true)
-  end
-
-  it 'raises an exception' do
+  it 'emits all the expected metrics' do
+    expect(File).to receive(:exist?).with('.rubocop.yml').and_return(true)
     expect(File).to receive(:read).with('rubocop.output.json').and_return(payload.to_json)
 
     expect(subject).to include(

@@ -39,12 +39,10 @@ RSpec.describe Engines::Semgrep::Extractor do
     provider.pending.transform_keys(&:to_sym)
   end
 
-  before do
-    allow(File).to receive(:exist?).with('.semgrep.yml').and_return(true)
-  end
-
   it 'emits all the expected metrics' do
+    expect(File).to receive(:exist?).with('.semgrep.yml').and_return(true)
     expect(File).to receive(:read).with('semgrep.output.json').and_return(payload.to_json)
+
     expect(subject).to include(
       semgrep_number_of_offenses: 3,
       semgrep_number_of_errors: 0,
