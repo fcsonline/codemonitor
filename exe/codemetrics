@@ -9,19 +9,38 @@ require_relative '../engines/npm/extractor'
 require_relative '../engines/semgrep/extractor'
 require_relative '../engines/rubocop/extractor'
 
-provider = Providers::Console.new
+PROVIDERS = {
+  console: Providers::Console,
+  datadog: Providers::Datadog
+}.freeze
 
-Engines::Git::Extractor.new.call(provider)
-Engines::Npm::Extractor.new.call(provider)
-Engines::Semgrep::Extractor.new.call(provider)
-Engines::Rubocop::Extractor.new.call(provider)
+EXTRACTORS = {
+  git: Engines::Git::Extractor,
+  npm: Engines::Npm::Extractor,
+  semgrep: Engines::Semgrep::Extractor,
+  rubocop: Engines::Rubocop::Extractor
+}.freeze
 
+config_provider = ENV['CODEMETRICS_PROVIDER'] || 'console'
+config_extractors = ENV['CODEMETRICS_EXTRACTORS']
+
+provider = PROVIDERS[config_provider.to_sym].new
+extractors = if config_extractors
+               EXTRACTORS.slice(*config_extractors.split(',').map(&:to_sym)).values
+             else
+               EXTRACTORS.values
+             end
+
+puts '# process start'
+
+# Run all the extractors and collect the data
+extractors
+  .map(&:new)
+  .map do |extractor|
+    extractor.call(provider)
+  end
+
+# Send all the data to the provider
 provider.send
 
-# NOTE: Datadog
-# provider = Providers::Datadog.new('myproject.code.')
-
-# Engines::Git::Extractor.new.call(provider)
-# Engines::Npm::Extractor.new.call(provider)
-
-# provider.send
+puts '# process end'

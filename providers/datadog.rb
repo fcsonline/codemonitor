@@ -4,11 +4,10 @@ require 'dogapi'
 
 module Providers
   class Datadog
-    def initialize(metric_prefix)
+    def initialize
       @pending = {}
-      @metric_prefix = metric_prefix
+      @metric_prefix = ENV['DATADOG_PREFIX'] || 'codemetrics.'
       @datadog_client = Dogapi::Client.new(ENV['DATADOG_API_KEY'])
-      puts '# process start'
     end
 
     def emit(metrics)
@@ -23,8 +22,6 @@ module Providers
           datadog_client.emit_point(metric, value, type: 'gauge')
         end
       end
-
-      puts '# process complete'
     end
 
     private

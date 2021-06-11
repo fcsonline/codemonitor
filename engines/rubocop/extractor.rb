@@ -11,8 +11,8 @@ module Engines
         rubocop_number_of_correctable
       ].freeze
 
-      def initialize(threshold: 50)
-        @threshold = threshold
+      def initialize
+        @threshold = ENV.fetch('RUBOCOP_THRESHOLD', '50').to_i
       end
 
       def call(provider)
@@ -21,8 +21,10 @@ module Engines
         metrics = METRICS.map do |metric|
           [metric, send(metric)]
         end.to_h
-                         .merge(rubocop_by_severity)
-                         .merge(rubocop_by_cop_name)
+
+        metrics
+          .merge!(rubocop_by_severity)
+          .merge!(rubocop_by_cop_name)
 
         provider.emit(metrics)
       end

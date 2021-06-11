@@ -11,8 +11,8 @@ module Engines
         semgrep_number_of_errors
       ].freeze
 
-      def initialize(threshold: 50)
-        @threshold = threshold
+      def initialize
+        @threshold = ENV.fetch('SEMGREP_THRESHOLD', '50').to_i
       end
 
       def call(provider)
@@ -20,7 +20,9 @@ module Engines
 
         metrics = METRICS.map do |metric|
           [metric, send(metric)]
-        end.to_h.merge(semgrep_by_check_id)
+        end.to_h
+
+        metrics.merge!(semgrep_by_check_id)
 
         provider.emit(metrics)
       end

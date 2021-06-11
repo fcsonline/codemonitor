@@ -4,7 +4,6 @@ module Providers
   class Console
     def initialize
       @pending = {}
-      puts '# process start'
     end
 
     def emit(metrics)
@@ -15,7 +14,6 @@ module Providers
       pending.map do |metric, value|
         puts "#{metric}: #{value}"
       end
-      puts '# process complete'
     end
 
     private
