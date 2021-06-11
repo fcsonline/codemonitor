@@ -12,7 +12,7 @@ module Engines
       ].freeze
 
       def initialize
-        @threshold = ENV.fetch('RUBOCOP_THRESHOLD', '50').to_i
+        @threshold = ENV.fetch('CODEMETRICS_RUBOCOP_THRESHOLD', '50').to_i
       end
 
       def call(provider)
