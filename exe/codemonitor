@@ -21,8 +21,8 @@ EXTRACTORS = {
   rubocop: Engines::Rubocop::Extractor
 }.freeze
 
-config_provider = ENV['CODEMETRICS_PROVIDER'] || 'console'
-config_extractors = ENV['CODEMETRICS_EXTRACTORS']
+config_provider = ENV['CODEMONITOR_PROVIDER'] || 'console'
+config_extractors = ENV['CODEMONITOR_EXTRACTORS']
 
 provider = PROVIDERS[config_provider.to_sym].new
 extractors = if config_extractors

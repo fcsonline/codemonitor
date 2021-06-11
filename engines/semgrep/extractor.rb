@@ -12,7 +12,7 @@ module Engines
       ].freeze
 
       def initialize
-        @threshold = ENV.fetch('CODEMETRICS_SEMGREP_THRESHOLD', '50').to_i
+        @threshold = ENV.fetch('CODEMONITOR_SEMGREP_THRESHOLD', '50').to_i
       end
 
       def call(provider)

@@ -6,7 +6,7 @@ module Providers
   class Datadog
     def initialize
       @pending = {}
-      @metric_prefix = ENV['DATADOG_PREFIX'] || 'codemetrics.'
+      @metric_prefix = ENV['DATADOG_PREFIX'] || 'codemonitor.'
       @datadog_client = Dogapi::Client.new(ENV['DATADOG_API_KEY'])
     end
 

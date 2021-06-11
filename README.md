@@ -1,4 +1,4 @@
-# CodeMetrics
+# CodeMonitor
 
 A engine to collect multiple metrics from your repository and push them to a
 time series provider.
