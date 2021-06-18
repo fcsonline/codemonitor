@@ -22,6 +22,9 @@ module Engines
           [metric, send(metric)]
         end.to_h
 
+        metrics
+          .merge!(git_file_extensions)
+
         provider.emit(metrics)
       end
 
@@ -73,6 +76,16 @@ module Engines
           .map do |file|
             File.read(File.expand_path(file.strip, Dir.pwd)).lines.count
           end.sum
+      end
+
+      def git_file_extensions
+        Shell.run('git ls-files')
+          .lines
+          .map do |file|
+            File.extname(file.strip)
+          end.each_with_object(Hash.new(0)) do |type, total|
+            total["git_file_extensions_#{type.gsub('.', '')}"] += 1
+          end
       end
     end
   end
