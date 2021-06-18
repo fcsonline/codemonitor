@@ -58,7 +58,7 @@ module Engines
       end
 
       def git_number_of_files
-        Shell.run('git ls-tree -r master --name-only')
+        Shell.run('git ls-tree -r HEAD --name-only')
           .lines
           .count
       end
