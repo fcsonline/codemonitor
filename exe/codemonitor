@@ -9,6 +9,7 @@ require_relative '../engines/npm/extractor'
 require_relative '../engines/semgrep/extractor'
 require_relative '../engines/rubocop/extractor'
 require_relative '../engines/packwerk/extractor'
+require_relative '../engines/sorbet/extractor'
 
 PROVIDERS = {
   console: Providers::Console,
@@ -20,7 +21,8 @@ EXTRACTORS = {
   npm: Engines::Npm::Extractor,
   semgrep: Engines::Semgrep::Extractor,
   rubocop: Engines::Rubocop::Extractor,
-  packwerk: Engines::Packwerk::Extractor
+  packwerk: Engines::Packwerk::Extractor,
+  sorbet: Engines::Sorbet::Extractor
 }.freeze
 
 config_provider = ENV['CODEMONITOR_PROVIDER'] || 'console'
