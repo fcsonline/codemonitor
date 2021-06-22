@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    codemonitor (0.1.0)
+    codemonitor (0.2.0)
       dogapi (~> 1.45)
 
 GEM
