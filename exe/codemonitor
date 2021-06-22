@@ -4,11 +4,12 @@
 require_relative '../providers/console'
 require_relative '../providers/datadog'
 
+require_relative '../engines/eslint/extractor'
 require_relative '../engines/git/extractor'
 require_relative '../engines/npm/extractor'
-require_relative '../engines/semgrep/extractor'
-require_relative '../engines/rubocop/extractor'
 require_relative '../engines/packwerk/extractor'
+require_relative '../engines/rubocop/extractor'
+require_relative '../engines/semgrep/extractor'
 require_relative '../engines/sorbet/extractor'
 
 PROVIDERS = {
@@ -17,11 +18,12 @@ PROVIDERS = {
 }.freeze
 
 EXTRACTORS = {
+  eslint: Engines::Eslint::Extractor,
   git: Engines::Git::Extractor,
   npm: Engines::Npm::Extractor,
-  semgrep: Engines::Semgrep::Extractor,
-  rubocop: Engines::Rubocop::Extractor,
   packwerk: Engines::Packwerk::Extractor,
+  rubocop: Engines::Rubocop::Extractor,
+  semgrep: Engines::Semgrep::Extractor,
   sorbet: Engines::Sorbet::Extractor
 }.freeze
 
