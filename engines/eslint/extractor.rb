@@ -81,7 +81,7 @@ module Engines
           .each_with_object(Hash.new(0)) do |offense, total|
             total[offense['ruleId']] += 1
           end.map do |key, value|
-            ["eslint_cop_#{clean(key)}", value] if value >= threshold
+            ["eslint_rule_#{clean(key)}", value] if value >= threshold
           end.compact.to_h
       end
 
