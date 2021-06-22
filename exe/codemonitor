@@ -8,6 +8,7 @@ require_relative '../engines/git/extractor'
 require_relative '../engines/npm/extractor'
 require_relative '../engines/semgrep/extractor'
 require_relative '../engines/rubocop/extractor'
+require_relative '../engines/packwerk/extractor'
 
 PROVIDERS = {
   console: Providers::Console,
@@ -18,7 +19,8 @@ EXTRACTORS = {
   git: Engines::Git::Extractor,
   npm: Engines::Npm::Extractor,
   semgrep: Engines::Semgrep::Extractor,
-  rubocop: Engines::Rubocop::Extractor
+  rubocop: Engines::Rubocop::Extractor,
+  packwerk: Engines::Packwerk::Extractor
 }.freeze
 
 config_provider = ENV['CODEMONITOR_PROVIDER'] || 'console'
