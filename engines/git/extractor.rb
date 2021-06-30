@@ -15,6 +15,10 @@ module Engines
         git_number_of_lines
       ].freeze
 
+      def initialize
+        @threshold = ENV.fetch('CODEMONITOR_GIT_FILES_THRESHOLD', '0').to_i
+      end
+
       def call(provider)
         return unless requirements?
 
@@ -29,6 +33,8 @@ module Engines
       end
 
       private
+
+      attr_reader :threshold
 
       def requirements?
         File.exist?('.git')
@@ -84,8 +90,10 @@ module Engines
           .map do |file|
             File.extname(file.strip)
           end.each_with_object(Hash.new(0)) do |type, total|
-            total["git_file_extensions_#{type.gsub('.', '')}"] += 1
-          end
+            total[type.gsub('.', '')] += 1
+          end.map do |key, value|
+            ["git_file_extensions_#{key}", value] if value >= threshold
+          end.compact.to_h
       end
     end
   end
