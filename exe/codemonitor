@@ -5,6 +5,7 @@ require_relative '../providers/console'
 require_relative '../providers/datadog'
 
 require_relative '../engines/eslint/extractor'
+require_relative '../engines/debug/extractor'
 require_relative '../engines/git/extractor'
 require_relative '../engines/npm/extractor'
 require_relative '../engines/packwerk/extractor'
@@ -19,6 +20,7 @@ PROVIDERS = {
 
 EXTRACTORS = {
   eslint: Engines::Eslint::Extractor,
+  debug: Engines::Debug::Extractor,
   git: Engines::Git::Extractor,
   npm: Engines::Npm::Extractor,
   packwerk: Engines::Packwerk::Extractor,
