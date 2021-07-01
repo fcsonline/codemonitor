@@ -17,7 +17,7 @@ module Providers
     def send
       datadog_client.batch_metrics do
         pending.each do |metric, value|
-          metric = metric_prefix + metric
+          metric = "#{metric_prefix}#{metric}"
           puts "#{metric}: #{value}"
           datadog_client.emit_point(metric, value, type: 'gauge')
         end
