@@ -26,6 +26,6 @@ module Providers
 
     private
 
-    attr_reader :pending, :datadog_client
+    attr_reader :pending, :metric_prefix, :datadog_client
   end
 end
