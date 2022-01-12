@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'dogapi', '~> 1.45'
+  spec.add_runtime_dependency 'octokit', '~> 4.0'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'pry', '~> 0.13.1'
