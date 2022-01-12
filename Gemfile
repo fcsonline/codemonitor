@@ -2,5 +2,5 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in rubocop-changes.gemspec
+# Specify your gem's dependencies in codemonitor.gemspec
 gemspec
