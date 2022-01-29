@@ -13,6 +13,7 @@ require_relative '../engines/packwerk/extractor'
 require_relative '../engines/rubocop/extractor'
 require_relative '../engines/semgrep/extractor'
 require_relative '../engines/sorbet/extractor'
+require_relative '../engines/scc/extractor'
 require_relative '../engines/custom/extractor'
 
 PROVIDERS = {
@@ -30,6 +31,7 @@ EXTRACTORS = {
   rubocop: Engines::Rubocop::Extractor,
   semgrep: Engines::Semgrep::Extractor,
   sorbet: Engines::Sorbet::Extractor,
+  scc: Engines::Scc::Extractor,
   custom: Engines::Custom::Extractor
 }.freeze
 

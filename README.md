@@ -12,7 +12,7 @@ Collect multiple metrics from the a Git repository.
 
 **Requirements / Setup**:
 
-You need a `.git` folder present in the current folder: 
+You need a `.git` folder present in the current folder:
 
 **Options**:
 
@@ -101,6 +101,20 @@ You can generate the `sorbet.output.json` file with this example command:
 
 ```
 bundle exec srb tc --metrics-prefix 'codemetrics' --metrics-file sorbet.output.json
+```
+
+## SCC
+
+Collect multiple metrics from [SCC](https://github.com/boyter/scc) configured.
+
+**Requirements / Setup**:
+
+You need a `scc.output.json` file present in the current folder.
+
+You can generate the `scc.output.json` file with this example command:
+
+```
+scc -f json scc.output.json
 ```
 
 # Providers
