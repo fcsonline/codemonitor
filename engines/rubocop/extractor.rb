@@ -15,8 +15,6 @@ module Engines
       end
 
       def call(provider)
-        return unless requirements?
-
         metrics = METRICS.map do |metric|
           [metric, send(metric)]
         end.to_h
@@ -28,15 +26,14 @@ module Engines
         provider.emit(metrics)
       end
 
+      def requirements?
+        File.exist?('rubocop.output.json')
+      end
+
       private
 
       attr_reader :threshold
 
-      def requirements?
-        File.exist?('.rubocop.yml')
-      end
-
-      # NOTE: This output file must be created by an external command
       def rubocop
         @rubocop ||= JSON.parse(File.read('rubocop.output.json'))
       end

@@ -20,8 +20,6 @@ module Engines
       end
 
       def call(provider)
-        return unless requirements?
-
         metrics = METRICS.map do |metric|
           [metric, send(metric)]
         end.to_h
@@ -32,13 +30,13 @@ module Engines
         provider.emit(metrics)
       end
 
-      private
-
-      attr_reader :threshold
-
       def requirements?
         File.exist?('.git')
       end
+
+      private
+
+      attr_reader :threshold
 
       def git_number_of_commits
         Shell.run("git log --format='%h'").lines.count

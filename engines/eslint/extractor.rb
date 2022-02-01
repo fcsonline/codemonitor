@@ -16,8 +16,6 @@ module Engines
       end
 
       def call(provider)
-        return unless requirements?
-
         metrics = METRICS.map do |metric|
           [metric, send(metric)]
         end.to_h
@@ -29,16 +27,14 @@ module Engines
         provider.emit(metrics)
       end
 
+      def requirements?
+        File.exist?('eslint.output.json')
+      end
+
       private
 
       attr_reader :threshold
 
-      def requirements?
-        # FIXME: Review if this is the only check we can do or there are more.
-        File.exist?('.eslintrc.js')
-      end
-
-      # NOTE: This output file must be created by an external command
       def eslint
         @eslint ||= JSON.parse(File.read('eslint.output.json'))
       end

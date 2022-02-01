@@ -24,8 +24,6 @@ module Engines
       def initialize; end
 
       def call(provider)
-        return unless requirements?
-
         metrics = METRICS.map do |metric|
           [metric, send(metric)]
         end.to_h
@@ -33,13 +31,12 @@ module Engines
         provider.emit(metrics)
       end
 
-      private
-
       def requirements?
         File.exist?('sorbet.output.json')
       end
 
-      # NOTE: This output file must be created by an external command
+      private
+
       def sorbet
         @sorbet ||= JSON.parse(File.read('sorbet.output.json'))
       end

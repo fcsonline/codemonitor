@@ -11,8 +11,6 @@ module Engines
       def initialize; end
 
       def call(provider)
-        return unless requirements?
-
         metrics = METRICS.map do |metric|
           [metric, send(metric)]
         end.to_h
@@ -24,13 +22,12 @@ module Engines
         provider.emit(metrics)
       end
 
-      private
-
       def requirements?
         File.exist?('scc.output.json')
       end
 
-      # NOTE: This output file must be created by an external command
+      private
+
       def scc
         @scc ||= JSON.parse(File.read('scc.output.json'))
       end

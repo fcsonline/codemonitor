@@ -15,8 +15,6 @@ module Engines
       end
 
       def call(provider)
-        return unless requirements?
-
         metrics = METRICS.map do |metric|
           [metric, send(metric)]
         end.to_h
@@ -26,15 +24,14 @@ module Engines
         provider.emit(metrics)
       end
 
+      def requirements?
+        File.exist?('semgrep.output.json')
+      end
+
       private
 
       attr_reader :threshold
 
-      def requirements?
-        File.exist?('.semgrep.yml')
-      end
-
-      # NOTE: This output file must be created by an external command
       def semgrep
         @semgrep ||= JSON.parse(File.read('semgrep.output.json'))
       end

@@ -4,16 +4,14 @@ module Engines
   module Custom
     class Extractor
       def call(provider)
-        return unless requirements?
-
         provider.emit(metrics)
       end
-
-      private
 
       def requirements?
         custom_files.length.positive?
       end
+
+      private
 
       def custom_files
         Dir.glob('./.codemonitor/*.rb')

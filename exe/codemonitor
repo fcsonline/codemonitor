@@ -51,6 +51,8 @@ puts '# process start'
 extractors
   .map(&:new)
   .map do |extractor|
+    raise "Requirements not fullfiled in #{extractor.class.name}" unless extractor.requirements?
+
     extractor.call(provider)
   end
 

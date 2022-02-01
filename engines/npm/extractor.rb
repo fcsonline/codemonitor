@@ -18,8 +18,6 @@ module Engines
       ].freeze
 
       def call(provider)
-        return unless requirements?
-
         metrics = METRICS.map do |metric|
           [metric, send(metric) || 0]
         end.to_h
@@ -27,11 +25,11 @@ module Engines
         provider.emit(metrics)
       end
 
-      private
-
       def requirements?
         File.exist?('package.json')
       end
+
+      private
 
       def npm_number_of_dependencies
         npm_package['dependencies'].keys.length

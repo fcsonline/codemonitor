@@ -8,8 +8,6 @@ module Engines
       ].freeze
 
       def call(provider)
-        return unless requirements?
-
         metrics = METRICS.map do |metric|
           [metric, send(metric) || 0]
         end.to_h
@@ -17,11 +15,11 @@ module Engines
         provider.emit(metrics)
       end
 
-      private
-
       def requirements?
         true
       end
+
+      private
 
       def debug_random
         rand(0..100)

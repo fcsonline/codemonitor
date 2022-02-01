@@ -22,13 +22,15 @@ module Engines
       end
 
       def call(provider)
-        return unless requirements?
-
         metrics = METRICS.map do |metric|
           [metric, send(metric)]
         end.to_h
 
         provider.emit(metrics)
+      end
+
+      def requirements?
+        !access_token.nil? && !repository.nil?
       end
 
       private
@@ -37,10 +39,6 @@ module Engines
 
       def github
         @github ||= Octokit::Client.new(access_token: access_token)
-      end
-
-      def requirements?
-        !access_token.nil? && !repository.nil?
       end
 
       def since

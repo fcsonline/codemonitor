@@ -13,8 +13,6 @@ module Engines
       def initialize; end
 
       def call(provider)
-        return unless requirements?
-
         metrics = METRICS.map do |metric|
           [metric, send(metric)]
         end.to_h
@@ -22,11 +20,11 @@ module Engines
         provider.emit(metrics)
       end
 
-      private
-
       def requirements?
         packwerk_files.length.positive?
       end
+
+      private
 
       # NOTE: This output file must be created by an external command
       def packwerk_files
