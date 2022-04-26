@@ -6,7 +6,7 @@ module Engines
   module Scc
     class Extractor
       METRICS = %i[].freeze
-      FIELDS = %w[Bytes Lines Code Comment Blank Complexity Count WeightedComplexity]
+      FIELDS = %w[Bytes Lines Code Comment Blank Complexity Count WeightedComplexity].freeze
 
       def initialize; end
 
