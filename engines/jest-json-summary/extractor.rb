@@ -56,7 +56,7 @@ module Engines
 
       def flatten(member, rename = nil)
         json_summary['total'][member].map do |key, value|
-          ["jest_json_summary_#{rename || member}_#{key}", value.to_i]
+          ["jest_json_summary_#{rename || member}_#{key}", value.to_f]
         end.to_h
       end
     end

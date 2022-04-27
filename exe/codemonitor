@@ -16,6 +16,7 @@ require_relative '../engines/sorbet/extractor'
 require_relative '../engines/scc/extractor'
 require_relative '../engines/custom/extractor'
 require_relative '../engines/jest-json-summary/extractor'
+require_relative '../engines/simplecov-json-coverage/extractor'
 
 PROVIDERS = {
   console: Providers::Console,
@@ -34,7 +35,8 @@ EXTRACTORS = {
   sorbet: Engines::Sorbet::Extractor,
   scc: Engines::Scc::Extractor,
   custom: Engines::Custom::Extractor,
-  jest_json_summary: Engines::JestJsonSummary::Extractor
+  jest_json_summary: Engines::JestJsonSummary::Extractor,
+  simplecov_json_coverage: Engines::SimpleCovJsonCoverage::Extractor
 }.freeze
 
 config_provider = ENV['CODEMONITOR_PROVIDER'] || 'console'
