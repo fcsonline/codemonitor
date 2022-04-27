@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    codemonitor (0.5.0)
+    codemonitor (0.6.0)
       dogapi (~> 1.45)
       octokit (~> 4.0)
 
