@@ -19,7 +19,6 @@ module Engines
           .merge!(total_statements)
           .merge!(total_functions)
           .merge!(total_branches)
-          .merge!(total_branches_true)
 
         provider.emit(metrics)
       end
@@ -48,10 +47,6 @@ module Engines
 
       def total_branches
         flatten('branches')
-      end
-
-      def total_branches_true
-        flatten('branchesTrue', 'branches_true')
       end
 
       def flatten(member, rename = nil)
