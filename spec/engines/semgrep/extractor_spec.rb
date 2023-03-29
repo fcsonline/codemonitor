@@ -34,13 +34,16 @@ RSpec.describe Engines::Semgrep::Extractor do
     }
   end
 
+  before do
+    ENV['CODEMONITOR_SEMGREP_THRESHOLD'] = '0'
+  end
+
   subject do
-    described_class.new(threshold: 0).call(provider)
+    described_class.new.call(provider)
     provider.pending.transform_keys(&:to_sym)
   end
 
   it 'emits all the expected metrics' do
-    expect(File).to receive(:exist?).with('.semgrep.yml').and_return(true)
     expect(File).to receive(:read).with('semgrep.output.json').and_return(payload.to_json)
 
     expect(subject).to include(

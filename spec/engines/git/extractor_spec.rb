@@ -17,14 +17,13 @@ RSpec.describe Engines::Git::Extractor do
   end
 
   it 'emits all the expected metrics' do
-    expect(File).to receive(:exist?).with('.git').and_return(true)
     expect(Shell).to receive(:run).with("git log --format='%h'").and_return(output(2, 'commit'))
     expect(Shell).to receive(:run).with('git ls-remote -q').and_return(output(3, 'refs/heads/foo'))
     expect(Shell).to receive(:run).with('git ls-remote -q').and_return(output(4, 'refs/tags/foo'))
     expect(Shell).to receive(:run).with("git log --format='%aN'").and_return(output(5, 'paco'))
     expect(Shell).to receive(:run).with('git ls-tree -r HEAD --name-only').and_return(output(6, 'file'))
     expect(Shell).to receive(:run).with('git check-ignore *').and_return(output(7, 'ignore'))
-    expect(Shell).to receive(:run).with('git ls-files').and_return(output(2, 'content'))
+    expect(Shell).to receive(:run).with('git ls-files').twice.and_return(output(2, 'content'))
     expect(File).to receive(:read).twice.with(File.expand_path('content', Dir.pwd)).and_return(output(10, 'line'))
 
     expect(subject).to include(

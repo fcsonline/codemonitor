@@ -41,6 +41,24 @@ RSpec.describe Engines::Npm::Extractor do
         baz: {
           severity: 'moderate'
         }
+      },
+      metadata: {
+        vulnerabilities: {
+          info: 0,
+          low: 0,
+          moderate: 1,
+          high: 3,
+          critical: 0,
+          total: 4
+        },
+        dependencies: {
+          prod: 6,
+          dev: 2,
+          optional: 1,
+          peer: 0,
+          peerOptional: 0,
+          total: 518
+        }
       }
     }
   end
@@ -51,15 +69,14 @@ RSpec.describe Engines::Npm::Extractor do
   end
 
   it 'emits all the expected metrics' do
-    expect(File).to receive(:exist?).with('package.json').and_return(true)
     expect(File).to receive(:read).with('package.json').and_return(payload.to_json)
     expect(Shell).to receive(:run).with('npm audit --json').and_return(audit.to_json)
 
     expect(subject).to include(
-      npm_number_of_dependencies: 3,
+      npm_number_of_prod_dependencies: 3,
       npm_number_of_dev_dependencies: 2,
       npm_number_of_scripts: 4,
-      npm_number_of_vulnerable_dependencies: 4,
+      npm_number_of_vulnerable_dependencies_total: 4,
       npm_number_of_vulnerable_dependencies_low: 0,
       npm_number_of_vulnerable_dependencies_moderate: 1,
       npm_number_of_vulnerable_dependencies_high: 3
