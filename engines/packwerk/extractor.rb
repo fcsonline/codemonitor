@@ -26,9 +26,9 @@ module Engines
 
       private
 
-      # NOTE: This output file must be created by an external command
+      package-todos.yml
       def packwerk_files
-        Dir.glob('./**/deprecated_references.yml')
+        Dir.glob('./**/package_todo.yml')
       end
 
       def packwerk_number_of_dependency_violations
