@@ -1,27 +1,27 @@
 PATH
   remote: .
   specs:
-    codemonitor (0.6.3)
+    codemonitor (0.6.4)
       dogapi (~> 1.45)
       octokit (~> 4.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.8.0)
-      public_suffix (>= 2.0.2, < 5.0)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     coderay (1.1.3)
     diff-lcs (1.3)
     dogapi (1.45.0)
       multi_json
-    faraday (2.3.0)
-      faraday-net_http (~> 2.0)
+    faraday (2.7.4)
+      faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
-    faraday-net_http (2.0.3)
+    faraday-net_http (3.0.2)
     method_source (1.0.0)
     multi_json (1.15.0)
-    octokit (4.25.0)
+    octokit (4.25.1)
       faraday (>= 1, < 3)
       sawyer (~> 0.9)
     parallel (1.20.1)
@@ -30,7 +30,7 @@ GEM
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    public_suffix (4.0.7)
+    public_suffix (5.0.1)
     rainbow (3.0.0)
     rake (13.0.3)
     regexp_parser (2.1.1)
