@@ -26,7 +26,6 @@ module Engines
 
       private
 
-      package-todos.yml
       def packwerk_files
         Dir.glob('./**/package_todo.yml')
       end
