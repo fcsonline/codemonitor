@@ -4,19 +4,20 @@
 require_relative '../providers/console'
 require_relative '../providers/datadog'
 
-require_relative '../engines/eslint/extractor'
+require_relative '../engines/custom/extractor'
 require_relative '../engines/debug/extractor'
+require_relative '../engines/eslint/extractor'
 require_relative '../engines/git/extractor'
 require_relative '../engines/github/extractor'
+require_relative '../engines/jest-json-summary/extractor'
+require_relative '../engines/knip/extractor'
 require_relative '../engines/npm/extractor'
 require_relative '../engines/packwerk/extractor'
 require_relative '../engines/rubocop/extractor'
-require_relative '../engines/semgrep/extractor'
-require_relative '../engines/sorbet/extractor'
 require_relative '../engines/scc/extractor'
-require_relative '../engines/custom/extractor'
-require_relative '../engines/jest-json-summary/extractor'
+require_relative '../engines/semgrep/extractor'
 require_relative '../engines/simplecov-json-coverage/extractor'
+require_relative '../engines/sorbet/extractor'
 
 PROVIDERS = {
   console: Providers::Console,
@@ -24,19 +25,20 @@ PROVIDERS = {
 }.freeze
 
 EXTRACTORS = {
-  eslint: Engines::Eslint::Extractor,
+  custom: Engines::Custom::Extractor,
   debug: Engines::Debug::Extractor,
+  eslint: Engines::Eslint::Extractor,
   git: Engines::Git::Extractor,
   github: Engines::Github::Extractor,
+  jest_json_summary: Engines::JestJsonSummary::Extractor,
+  knip: Engines::Knip::Extractor,
   npm: Engines::Npm::Extractor,
   packwerk: Engines::Packwerk::Extractor,
   rubocop: Engines::Rubocop::Extractor,
-  semgrep: Engines::Semgrep::Extractor,
-  sorbet: Engines::Sorbet::Extractor,
   scc: Engines::Scc::Extractor,
-  custom: Engines::Custom::Extractor,
-  jest_json_summary: Engines::JestJsonSummary::Extractor,
-  simplecov_json_coverage: Engines::SimpleCovJsonCoverage::Extractor
+  semgrep: Engines::Semgrep::Extractor,
+  simplecov_json_coverage: Engines::SimpleCovJsonCoverage::Extractor,
+  sorbet: Engines::Sorbet::Extractor
 }.freeze
 
 config_provider = ENV['CODEMONITOR_PROVIDER'] || 'console'

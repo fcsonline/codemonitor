@@ -89,9 +89,23 @@ semgrep --json -o semgrep.output.json
 
 `CODEMONITOR_SEMGREP_THRESHOLD`: Don't emit metrics about rubocop cops that are above of this threshold. (Default: `50`)
 
+## Knip
+
+Collect multiple metrics from [Knip](https://knip.dev/)
+
+**Requirements / Setup**:
+
+You need a `knip.output.json` file present in the current folder.
+
+You can generate the `knip.output.json` file with this example command:
+
+```
+knip --reporter json > knip.output.json
+```
+
 ## Sorbet
 
-Collect multiple metrics from the a with [Sorbet](https://sorbet.org/) configured.
+Collect multiple metrics from [Sorbet](https://sorbet.org/) configured.
 
 **Requirements / Setup**:
 
