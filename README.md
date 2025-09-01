@@ -135,11 +135,37 @@ scc -f json scc.output.json
 
 ## Console
 
-TODO
+Simply outputs all metrics to the console.
+
+**Usage**:
+
+The console provider prints metrics in the format `metric_name: value`. If metrics include tags (using the `#` delimiter format), they are printed as is:
+
+```
+requests: 100
+errors: 5  
+requests#production: 200
+latency#backend,region:us-east-1,env:prod: 150
+```
 
 ## Datadog
 
-TODO
+Sends metrics to Datadog using the Datadog API. Supports metric tagging for better organization and filtering.
+
+**Environment Variables**:
+
+- `DATADOG_API_KEY` (required): your Datadog API key
+- `DATADOG_PREFIX` (optional): prefix to add to all metric names (default: `'codemonitor.'`)
+
+**Metric Tagging**:
+
+The Datadog provider supports adding tags to metrics by including them in the metric name using the `#` delimiter:
+
+- Format: `metric_name#tag1,tag2:value,tag3`
+- Example: `requests#frontend,app:webserver` → sends metric `requests` with tags `['frontend', 'app:webserver']`
+- Tags follow Datadog's standard format where tags can be simple (`tag`) or key-value pairs (`key:value`)
+
+More about tagging: [https://docs.datadoghq.com/getting_started/tagging/](https://docs.datadoghq.com/getting_started/tagging/)
 
 # Contribute
 

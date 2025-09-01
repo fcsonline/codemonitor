@@ -17,9 +17,10 @@ module Providers
     def send
       datadog_client.batch_metrics do
         pending.each do |metric, value|
-          metric = "#{metric_prefix}#{metric}"
-          puts "#{metric}: #{value}"
-          datadog_client.emit_point(metric, value, type: 'gauge')
+          metric_name, tags = extract_tags(metric)
+          metric_name = "#{metric_prefix}#{metric_name}"
+          puts "#{metric_name}#{tags ? "[#{tags.join(',')}]" : ''}: #{value}"
+          datadog_client.emit_point(metric_name, value, type: 'gauge', tags: tags)
         end
       end
     end
@@ -27,5 +28,15 @@ module Providers
     private
 
     attr_reader :pending, :metric_prefix, :datadog_client
+
+    def extract_tags(metric)
+      if metric.include?('#')
+        metric_name, tag_string = metric.split('#', 2)
+        tags = tag_string.split(',')
+        [metric_name, tags]
+      else
+        [metric, nil]
+      end
+    end
   end
 end
