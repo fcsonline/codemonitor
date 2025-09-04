@@ -1,17 +1,9 @@
 # frozen_string_literal: true
 
+require_relative 'base_provider'
+
 module Providers
-  class Test
-    def initialize
-      @pending = {}
-    end
-
-    def emit(metrics)
-      @pending = pending.merge(metrics)
-    end
-
+  class Test < BaseProvider
     def send; end
-
-    attr_reader :pending
   end
 end

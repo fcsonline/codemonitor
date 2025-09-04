@@ -1,17 +1,14 @@
 # frozen_string_literal: true
 
+require_relative 'base_provider'
 require 'dogapi'
 
 module Providers
-  class Datadog
+  class Datadog < BaseProvider
     def initialize
-      @pending = {}
+      super
       @metric_prefix = ENV['DATADOG_PREFIX'] || 'codemonitor.'
       @datadog_client = Dogapi::Client.new(ENV['DATADOG_API_KEY'])
-    end
-
-    def emit(metrics)
-      @pending = pending.merge(metrics)
     end
 
     def send
@@ -27,7 +24,7 @@ module Providers
 
     private
 
-    attr_reader :pending, :metric_prefix, :datadog_client
+    attr_reader :metric_prefix, :datadog_client
 
     def extract_tags(metric)
       if metric.include?('#')
