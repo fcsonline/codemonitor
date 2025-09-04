@@ -20,6 +20,7 @@ RSpec.describe Providers::Datadog do
     before do
       allow(datadog_client).to receive(:batch_metrics).and_yield
       allow(datadog_client).to receive(:emit_point)
+      allow(provider).to receive(:puts)
     end
 
     context 'with metrics without tags' do
