@@ -428,26 +428,6 @@ GITHUB_TOKEN=ghp_xxx GITHUB_REPOSITORY=owner/repo codemonitor
 | `github_number_of_open_pull_requests` | Number of open pull requests |
 | `github_number_of_lead_time_in_days` | Average lead time for merged PRs (in days) |
 
-## TSC
-
-Collect multiple metrics from TypeScript compiler diagnostics.
-
-**Requirements / Setup**:
-
-You need a `tsc.output.txt` file present in the current folder.
-
-You can generate the `tsc.output.txt` file with this example command:
-
-```
-pnpm tsc --extendedDiagnostics --incremental false > tsc.output.txt
-```
-
-Or using npm:
-
-```
-npm run tsc -- --extendedDiagnostics --incremental false > tsc.output.txt
-```
-
 # Providers
 
 Providers determine where the collected metrics are sent. CodeMonitor supports multiple output destinations.
