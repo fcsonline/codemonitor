@@ -55,13 +55,13 @@ if interactive_mode
   # Read from stdin until two consecutive empty lines
   lines = []
   empty_line_count = 0
-  
+
   while empty_line_count < 2
     line = $stdin.gets
     break unless line
-    
+
     line = line.chomp
-    
+
     if line.empty?
       empty_line_count += 1
     else
@@ -69,14 +69,14 @@ if interactive_mode
       lines << line
     end
   end
-  
+
   # Join the lines and evaluate as a Ruby hash
   input_str = lines.join("\n")
-  
+
   begin
     metrics = eval(input_str)
     raise "Input must be a Hash" unless metrics.is_a?(Hash)
-    
+
     provider.emit(metrics)
   rescue SyntaxError, StandardError => e
     puts "Error parsing input: #{e.message}"
