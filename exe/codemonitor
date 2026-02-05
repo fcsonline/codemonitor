@@ -18,6 +18,7 @@ require_relative '../engines/scc/extractor'
 require_relative '../engines/semgrep/extractor'
 require_relative '../engines/simplecov-json-coverage/extractor'
 require_relative '../engines/sorbet/extractor'
+require_relative '../engines/tsc/extractor'
 
 PROVIDERS = {
   console: Providers::Console,
@@ -38,7 +39,8 @@ EXTRACTORS = {
   scc: Engines::Scc::Extractor,
   semgrep: Engines::Semgrep::Extractor,
   simplecov_json_coverage: Engines::SimpleCovJsonCoverage::Extractor,
-  sorbet: Engines::Sorbet::Extractor
+  sorbet: Engines::Sorbet::Extractor,
+  tsc: Engines::Tsc::Extractor
 }.freeze
 
 # Parse command-line arguments
