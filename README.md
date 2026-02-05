@@ -4,6 +4,37 @@ A engine to collect multiple metrics from your repository and push them to a
 time series provider.
 
 
+# Usage
+
+## Interactive Mode
+
+CodeMonitor can accept metrics directly from standard input using the `--interactive` flag. This allows you to send custom metrics without needing to configure extractors:
+
+```bash
+codemonitor --interactive <<EOF
+{
+  metric_name: 100,
+  another_metric: 200,
+  "tagged_metric#tag1,tag2:value": 300
+}
+
+
+EOF
+```
+
+The interactive mode reads from stdin until it encounters two consecutive empty lines. The input must be a valid Ruby hash. This is useful for:
+- Sending ad-hoc metrics
+- Integrating with scripts that generate metrics dynamically
+- Testing providers without setting up extractors
+
+## Environment Variables
+
+- `CODEMONITOR_PROVIDER`: Provider to use (default: `console`, options: `console`, `datadog`)
+- `CODEMONITOR_EXTRACTORS`: Comma-separated list of extractors to run (default: all extractors)
+
+For provider-specific configuration, see the [Providers](#providers) section below.
+
+
 # Engines
 
 ## Git
