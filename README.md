@@ -6,7 +6,7 @@
 
 CodeMonitor acts as a centralized metrics collection hub for your codebase. It:
 
-- **Collects metrics** from various development tools and analysis engines
+- **Collects metrics** from various development tools and analysis extractors
 - **Aggregates data** from linters (ESLint, Rubocop, Semgrep), type checkers (Sorbet), test coverage tools (Jest, SimpleCov), dependency analyzers (npm, Knip, Packwerk), and more
 - **Normalizes metrics** into a consistent format
 - **Pushes data** to monitoring providers (Datadog, Console output)
@@ -43,8 +43,8 @@ codemonitor
 ```
 
 By default, it will:
-1. Auto-detect which engines are available (based on configuration files)
-2. Collect metrics from all detected engines
+1. Auto-detect which extractors are available (based on configuration files)
+2. Collect metrics from all detected extractors
 3. Output results to the console
 
 ### Configuration
@@ -52,7 +52,7 @@ By default, it will:
 Configure CodeMonitor using environment variables:
 
 - **`CODEMONITOR_PROVIDER`**: Choose where to send metrics (`console` or `datadog`). Default: `console`
-- **`CODEMONITOR_EXTRACTORS`**: Comma-separated list of specific engines to run (e.g., `git,eslint,npm`). If not set, all available engines run.
+- **`CODEMONITOR_EXTRACTORS`**: Comma-separated list of specific extractors to run (e.g., `git,eslint,npm`). If not set, all available extractors run.
 
 Example:
 
@@ -60,102 +60,13 @@ Example:
 # Send metrics to Datadog
 CODEMONITOR_PROVIDER=datadog DATADOG_API_KEY=your_key codemonitor
 
-# Run only specific engines
+# Run only specific extractors
 CODEMONITOR_EXTRACTORS=git,npm,eslint codemonitor
 ```
 
-## 📈 Metrics by Engine
+# Extractors
 
-Below is a comprehensive table of all metrics collected by each engine:
-
-| Engine | Metric | Description |
-|--------|--------|-------------|
-| **Git** | `git_number_of_commits` | Total number of commits in the repository |
-| | `git_number_of_branches` | Total number of branches |
-| | `git_number_of_tags` | Total number of tags |
-| | `git_number_of_contributors` | Total number of unique contributors |
-| | `git_number_of_files` | Total number of tracked files |
-| | `git_number_of_ignores_files` | Number of ignored files |
-| | `git_number_of_lines` | Total lines of code across all files |
-| | `git_file_extensions_*` | File count per extension (e.g., `git_file_extensions_rb`, `git_file_extensions_js`) |
-| **ESLint** | `eslint_number_of_offended_files` | Number of files with ESLint violations |
-| | `eslint_number_of_offenses` | Total number of ESLint violations |
-| | `eslint_number_of_correctable` | Number of auto-fixable violations |
-| | `eslint_severity_warning` | Number of warnings |
-| | `eslint_severity_error` | Number of errors |
-| | `eslint_rule_*` | Violation count per rule (e.g., `eslint_rule_no_console`) |
-| **npm** | `npm_number_of_prod_dependencies` | Number of production dependencies |
-| | `npm_number_of_dev_dependencies` | Number of development dependencies |
-| | `npm_number_of_scripts` | Number of npm scripts defined |
-| | `npm_number_of_computed_prod_dependencies` | Total production dependencies (including transitive) |
-| | `npm_number_of_computed_dev_dependencies` | Total dev dependencies (including transitive) |
-| | `npm_number_of_computed_optional_dependencies` | Total optional dependencies |
-| | `npm_number_of_computed_peer_dependencies` | Total peer dependencies |
-| | `npm_number_of_computed_peer_optional_dependencies` | Total optional peer dependencies |
-| | `npm_number_of_computed_total_dependencies` | Grand total of all dependencies |
-| | `npm_number_of_vulnerable_dependencies_info` | Vulnerabilities: info severity |
-| | `npm_number_of_vulnerable_dependencies_low` | Vulnerabilities: low severity |
-| | `npm_number_of_vulnerable_dependencies_moderate` | Vulnerabilities: moderate severity |
-| | `npm_number_of_vulnerable_dependencies_high` | Vulnerabilities: high severity |
-| | `npm_number_of_vulnerable_dependencies_critical` | Vulnerabilities: critical severity |
-| | `npm_number_of_vulnerable_dependencies_total` | Total number of vulnerabilities |
-| **Rubocop** | `rubocop_number_of_offenses` | Total number of Rubocop violations |
-| | `rubocop_number_of_correctable` | Number of auto-correctable violations |
-| | `rubocop_severity_*` | Violations by severity (e.g., `rubocop_severity_warning`) |
-| | `rubocop_cop_*` | Violations per cop (e.g., `rubocop_cop_style_frozen_string_literal_comment`) |
-| **Packwerk** | `packwerk_number_of_dependency_violations` | Number of package dependency violations |
-| | `packwerk_number_of_privacy_violations` | Number of package privacy violations |
-| **Semgrep** | `semgrep_number_of_offenses` | Total number of Semgrep findings |
-| | `semgrep_number_of_errors` | Number of Semgrep errors during analysis |
-| | `semgrep_check_*` | Findings per check ID |
-| **Knip** | `knip_number_of_dependecies` | Unused dependencies |
-| | `knip_number_of_devDependencies` | Unused dev dependencies |
-| | `knip_number_of_optionalPeerDependencies` | Unused optional peer dependencies |
-| | `knip_number_of_unlisted` | Unlisted dependencies |
-| | `knip_number_of_binaries` | Unused binaries |
-| | `knip_number_of_unresolved` | Unresolved imports |
-| | `knip_number_of_exports` | Unused exports |
-| | `knip_number_of_types` | Unused types |
-| | `knip_number_of_enumMembers` | Unused enum members |
-| | `knip_number_of_duplicates` | Duplicate exports |
-| **Sorbet** | `sorbet_number_of_sig_count` | Number of type signatures |
-| | `sorbet_number_of_input_classes_total` | Total number of classes |
-| | `sorbet_number_of_input_sends_total` | Total number of method calls |
-| | `sorbet_number_of_input_files` | Number of Ruby files analyzed |
-| | `sorbet_number_of_input_methods_total` | Total number of methods |
-| | `sorbet_number_of_input_modules_total` | Total number of modules |
-| | `sorbet_number_of_sigil_true` | Files with `typed: true` |
-| | `sorbet_number_of_sigil_false` | Files with `typed: false` |
-| | `sorbet_number_of_sigil_autogenerated` | Files with `typed: autogenerated` |
-| | `sorbet_number_of_sigil_strong` | Files with `typed: strong` |
-| | `sorbet_number_of_sigil_strict` | Files with `typed: strict` |
-| | `sorbet_number_of_sigil_ignore` | Files with `typed: ignore` |
-| **SCC** | `scc_total_bytes` | Total bytes across all files |
-| | `scc_total_lines` | Total lines across all files |
-| | `scc_total_code` | Total lines of code |
-| | `scc_total_comment` | Total comment lines |
-| | `scc_total_blank` | Total blank lines |
-| | `scc_total_complexity` | Total cyclomatic complexity |
-| | `scc_total_count` | Total number of files |
-| | `scc_total_weightedcomplexity` | Weighted complexity score |
-| | `scc_type_*_*` | Per-language metrics (e.g., `scc_type_ruby_code`, `scc_type_javascript_lines`) |
-| **Jest** | `jest_json_summary_lines_total` | Total lines in test coverage |
-| | `jest_json_summary_lines_covered` | Covered lines |
-| | `jest_json_summary_lines_skipped` | Skipped lines |
-| | `jest_json_summary_lines_pct` | Line coverage percentage |
-| | `jest_json_summary_statements_*` | Statement coverage metrics |
-| | `jest_json_summary_functions_*` | Function coverage metrics |
-| | `jest_json_summary_branches_*` | Branch coverage metrics |
-| **SimpleCov** | `simplecov_json_coverage_metrics_covered_percent` | Code coverage percentage |
-| | `simplecov_json_coverage_metrics_covered_strength` | Coverage strength score |
-| | `simplecov_json_coverage_metrics_covered_lines` | Number of covered lines |
-| | `simplecov_json_coverage_metrics_total_lines` | Total number of lines |
-| **GitHub** | `github_number_of_open_pull_requests` | Number of open pull requests |
-| | `github_number_of_lead_time_in_days` | Average lead time for merged PRs (in days) |
-
-# Engines
-
-Engines are the data collectors that extract metrics from various tools and sources. Each engine automatically activates when its requirements are met.
+Extractors are the data collectors that extract metrics from various tools and sources. Each extractor automatically activates when its requirements are met.
 
 ## Git
 
@@ -168,6 +79,19 @@ Collects repository statistics including commits, branches, tags, contributors, 
 **Options**:
 
 - `CODEMONITOR_GIT_FILES_THRESHOLD`: Filter out file extension metrics below this count (Default: `0`)
+
+**Metrics**:
+
+| Metric | Description |
+|--------|-------------|
+| `git_number_of_commits` | Total number of commits in the repository |
+| `git_number_of_branches` | Total number of branches |
+| `git_number_of_tags` | Total number of tags |
+| `git_number_of_contributors` | Total number of unique contributors |
+| `git_number_of_files` | Total number of tracked files |
+| `git_number_of_ignores_files` | Number of ignored files |
+| `git_number_of_lines` | Total lines of code across all files |
+| `git_file_extensions_*` | File count per extension (e.g., `git_file_extensions_rb`, `git_file_extensions_js`) |
 
 ## ESLint
 
@@ -187,6 +111,17 @@ eslint -f json -o eslint.output.json
 
 - `CODEMONITOR_ESLINT_THRESHOLD`: Only report rules with violations >= this threshold (Default: `10`)
 
+**Metrics**:
+
+| Metric | Description |
+|--------|-------------|
+| `eslint_number_of_offended_files` | Number of files with ESLint violations |
+| `eslint_number_of_offenses` | Total number of ESLint violations |
+| `eslint_number_of_correctable` | Number of auto-fixable violations |
+| `eslint_severity_warning` | Number of warnings |
+| `eslint_severity_error` | Number of errors |
+| `eslint_rule_*` | Violation count per rule (e.g., `eslint_rule_no_console`) |
+
 
 ## npm
 
@@ -197,6 +132,26 @@ Collects Node.js dependency information including counts, computed dependencies,
 - `package.json` file in the current directory
 - `package-lock.json` file in the current directory
 
+**Metrics**:
+
+| Metric | Description |
+|--------|-------------|
+| `npm_number_of_prod_dependencies` | Number of production dependencies |
+| `npm_number_of_dev_dependencies` | Number of development dependencies |
+| `npm_number_of_scripts` | Number of npm scripts defined |
+| `npm_number_of_computed_prod_dependencies` | Total production dependencies (including transitive) |
+| `npm_number_of_computed_dev_dependencies` | Total dev dependencies (including transitive) |
+| `npm_number_of_computed_optional_dependencies` | Total optional dependencies |
+| `npm_number_of_computed_peer_dependencies` | Total peer dependencies |
+| `npm_number_of_computed_peer_optional_dependencies` | Total optional peer dependencies |
+| `npm_number_of_computed_total_dependencies` | Grand total of all dependencies |
+| `npm_number_of_vulnerable_dependencies_info` | Vulnerabilities: info severity |
+| `npm_number_of_vulnerable_dependencies_low` | Vulnerabilities: low severity |
+| `npm_number_of_vulnerable_dependencies_moderate` | Vulnerabilities: moderate severity |
+| `npm_number_of_vulnerable_dependencies_high` | Vulnerabilities: high severity |
+| `npm_number_of_vulnerable_dependencies_critical` | Vulnerabilities: critical severity |
+| `npm_number_of_vulnerable_dependencies_total` | Total number of vulnerabilities |
+
 ## Packwerk
 
 Collects metrics from Shopify's [Packwerk](https://github.com/Shopify/packwerk) package system for Ruby, tracking dependency and privacy violations.
@@ -204,6 +159,13 @@ Collects metrics from Shopify's [Packwerk](https://github.com/Shopify/packwerk) 
 **Requirements**:
 
 - `package_todo.yml` files present in the project (in any subdirectory)
+
+**Metrics**:
+
+| Metric | Description |
+|--------|-------------|
+| `packwerk_number_of_dependency_violations` | Number of package dependency violations |
+| `packwerk_number_of_privacy_violations` | Number of package privacy violations |
 
 ## Rubocop
 
@@ -222,6 +184,15 @@ bundle exec rubocop -f json -o rubocop.output.json
 **Options**:
 
 - `CODEMONITOR_RUBOCOP_THRESHOLD`: Only report cops with violations >= this threshold (Default: `50`)
+
+**Metrics**:
+
+| Metric | Description |
+|--------|-------------|
+| `rubocop_number_of_offenses` | Total number of Rubocop violations |
+| `rubocop_number_of_correctable` | Number of auto-correctable violations |
+| `rubocop_severity_*` | Violations by severity (e.g., `rubocop_severity_warning`) |
+| `rubocop_cop_*` | Violations per cop (e.g., `rubocop_cop_style_frozen_string_literal_comment`) |
 
 
 ## Semgrep
@@ -242,6 +213,14 @@ semgrep --json -o semgrep.output.json
 
 - `CODEMONITOR_SEMGREP_THRESHOLD`: Only report check IDs with findings >= this threshold (Default: `50`)
 
+**Metrics**:
+
+| Metric | Description |
+|--------|-------------|
+| `semgrep_number_of_offenses` | Total number of Semgrep findings |
+| `semgrep_number_of_errors` | Number of Semgrep errors during analysis |
+| `semgrep_check_*` | Findings per check ID |
+
 ## Knip
 
 Collects unused code metrics from [Knip](https://knip.dev/), identifying unused dependencies, exports, and types.
@@ -255,6 +234,21 @@ Generate the required file:
 ```bash
 knip --reporter json > knip.output.json
 ```
+
+**Metrics**:
+
+| Metric | Description |
+|--------|-------------|
+| `knip_number_of_dependecies` | Unused dependencies |
+| `knip_number_of_devDependencies` | Unused dev dependencies |
+| `knip_number_of_optionalPeerDependencies` | Unused optional peer dependencies |
+| `knip_number_of_unlisted` | Unlisted dependencies |
+| `knip_number_of_binaries` | Unused binaries |
+| `knip_number_of_unresolved` | Unresolved imports |
+| `knip_number_of_exports` | Unused exports |
+| `knip_number_of_types` | Unused types |
+| `knip_number_of_enumMembers` | Unused enum members |
+| `knip_number_of_duplicates` | Duplicate exports |
 
 ## Sorbet
 
@@ -270,6 +264,23 @@ Generate the required file:
 bundle exec srb tc --metrics-prefix 'codemetrics' --metrics-file sorbet.output.json
 ```
 
+**Metrics**:
+
+| Metric | Description |
+|--------|-------------|
+| `sorbet_number_of_sig_count` | Number of type signatures |
+| `sorbet_number_of_input_classes_total` | Total number of classes |
+| `sorbet_number_of_input_sends_total` | Total number of method calls |
+| `sorbet_number_of_input_files` | Number of Ruby files analyzed |
+| `sorbet_number_of_input_methods_total` | Total number of methods |
+| `sorbet_number_of_input_modules_total` | Total number of modules |
+| `sorbet_number_of_sigil_true` | Files with `typed: true` |
+| `sorbet_number_of_sigil_false` | Files with `typed: false` |
+| `sorbet_number_of_sigil_autogenerated` | Files with `typed: autogenerated` |
+| `sorbet_number_of_sigil_strong` | Files with `typed: strong` |
+| `sorbet_number_of_sigil_strict` | Files with `typed: strict` |
+| `sorbet_number_of_sigil_ignore` | Files with `typed: ignore` |
+
 ## SCC (Sloc Cloc and Code)
 
 Collects code statistics from [SCC](https://github.com/boyter/scc), including lines of code, complexity, and language breakdowns.
@@ -284,6 +295,20 @@ Generate the required file:
 scc -f json > scc.output.json
 ```
 
+**Metrics**:
+
+| Metric | Description |
+|--------|-------------|
+| `scc_total_bytes` | Total bytes across all files |
+| `scc_total_lines` | Total lines across all files |
+| `scc_total_code` | Total lines of code |
+| `scc_total_comment` | Total comment lines |
+| `scc_total_blank` | Total blank lines |
+| `scc_total_complexity` | Total cyclomatic complexity |
+| `scc_total_count` | Total number of files |
+| `scc_total_weightedcomplexity` | Weighted complexity score |
+| `scc_type_*_*` | Per-language metrics (e.g., `scc_type_ruby_code`, `scc_type_javascript_lines`) |
+
 ## Jest
 
 Collects JavaScript/TypeScript test coverage metrics from Jest's JSON summary reporter.
@@ -294,6 +319,18 @@ Collects JavaScript/TypeScript test coverage metrics from Jest's JSON summary re
 
 Configure Jest to generate this file using the `json-summary` reporter in your `jest.config.js`.
 
+**Metrics**:
+
+| Metric | Description |
+|--------|-------------|
+| `jest_json_summary_lines_total` | Total lines in test coverage |
+| `jest_json_summary_lines_covered` | Covered lines |
+| `jest_json_summary_lines_skipped` | Skipped lines |
+| `jest_json_summary_lines_pct` | Line coverage percentage |
+| `jest_json_summary_statements_*` | Statement coverage metrics |
+| `jest_json_summary_functions_*` | Function coverage metrics |
+| `jest_json_summary_branches_*` | Branch coverage metrics |
+
 ## SimpleCov
 
 Collects Ruby test coverage metrics from [SimpleCov](https://github.com/simplecov-ruby/simplecov).
@@ -303,6 +340,15 @@ Collects Ruby test coverage metrics from [SimpleCov](https://github.com/simpleco
 - `simplecov_json_coverage.output.json` file in the current directory
 
 Configure SimpleCov to use the JSON formatter in your test setup.
+
+**Metrics**:
+
+| Metric | Description |
+|--------|-------------|
+| `simplecov_json_coverage_metrics_covered_percent` | Code coverage percentage |
+| `simplecov_json_coverage_metrics_covered_strength` | Coverage strength score |
+| `simplecov_json_coverage_metrics_covered_lines` | Number of covered lines |
+| `simplecov_json_coverage_metrics_total_lines` | Total number of lines |
 
 ## GitHub
 
@@ -322,6 +368,13 @@ Example:
 ```bash
 GITHUB_TOKEN=ghp_xxx GITHUB_REPOSITORY=owner/repo codemonitor
 ```
+
+**Metrics**:
+
+| Metric | Description |
+|--------|-------------|
+| `github_number_of_open_pull_requests` | Number of open pull requests |
+| `github_number_of_lead_time_in_days` | Average lead time for merged PRs (in days) |
 
 # Providers
 
@@ -377,12 +430,12 @@ More about Datadog tagging: [Datadog Tagging Documentation](https://docs.datadog
 
 ## 🔧 Advanced Usage
 
-### Running Specific Engines
+### Running Specific Extractors
 
-To run only specific engines, use the `CODEMONITOR_EXTRACTORS` environment variable:
+To run only specific extractors, use the `CODEMONITOR_EXTRACTORS` environment variable:
 
 ```bash
-# Run only Git and ESLint engines
+# Run only Git and ESLint extractors
 CODEMONITOR_EXTRACTORS=git,eslint codemonitor
 
 # Run npm and Rubocop with Datadog output
@@ -422,15 +475,15 @@ jobs:
 
 ### Best Practices
 
-1. **Generate tool outputs before running CodeMonitor**: Most engines require JSON output files from their respective tools
+1. **Generate tool outputs before running CodeMonitor**: Most extractors require JSON output files from their respective tools
 2. **Use thresholds wisely**: Adjust threshold values to focus on significant metrics and reduce noise
 3. **Track trends over time**: Send metrics to Datadog or similar to visualize trends and set up alerts
 4. **Run in CI/CD**: Automate metric collection on every commit or pull request
-5. **Combine multiple engines**: Use Git + linters + test coverage for a comprehensive health overview
+5. **Combine multiple extractors**: Use Git + linters + test coverage for a comprehensive health overview
 
 ## 🤝 Contribute
 
-This project started as a side project, so there's always room for improvement! If you have ideas for new engines, better metrics, or code improvements, pull requests are very welcome. 😊
+This project started as a side project, so there's always room for improvement! If you have ideas for new extractors, better metrics, or code improvements, pull requests are very welcome. 😊
 
 ## 📝 License
 
