@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    codemonitor (0.7.0)
+    codemonitor (0.7.1)
       dogapi (~> 1.45)
       octokit (~> 9.0)
 
@@ -84,4 +84,4 @@ DEPENDENCIES
   rubocop (~> 0.80)
 
 BUNDLED WITH
-   2.3.12
+   2.7.2
