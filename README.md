@@ -350,6 +350,58 @@ Configure SimpleCov to use the JSON formatter in your test setup.
 | `simplecov_json_coverage_metrics_covered_lines` | Number of covered lines |
 | `simplecov_json_coverage_metrics_total_lines` | Total number of lines |
 
+## TSC (TypeScript Compiler)
+
+Collects TypeScript compiler diagnostics and performance metrics from `tsc --extendedDiagnostics` output.
+
+**Requirements**:
+
+- `tsc.output.txt` file in the current directory
+
+Generate the required file:
+
+```bash
+pnpm tsc --extendedDiagnostics --incremental false > tsc.output.txt
+```
+
+Or using npm:
+
+```bash
+npm run tsc -- --extendedDiagnostics --incremental false > tsc.output.txt
+```
+
+**Metrics**:
+
+| Metric | Description |
+|--------|-------------|
+| `tsc_files` | Total number of files analyzed |
+| `tsc_lines_of_library` | Lines of library code |
+| `tsc_lines_of_definitions` | Lines of type definitions |
+| `tsc_lines_of_typescript` | Lines of TypeScript code |
+| `tsc_lines_of_javascript` | Lines of JavaScript code |
+| `tsc_lines_of_json` | Lines of JSON files |
+| `tsc_lines_of_other` | Lines of other file types |
+| `tsc_identifiers` | Total number of identifiers |
+| `tsc_symbols` | Total number of symbols |
+| `tsc_types` | Total number of types |
+| `tsc_instantiations` | Total number of type instantiations |
+| `tsc_memory_used_kb` | Memory used by compiler (in kilobytes) |
+| `tsc_assignability_cache_size` | Size of assignability cache |
+| `tsc_identity_cache_size` | Size of identity cache |
+| `tsc_subtype_cache_size` | Size of subtype cache |
+| `tsc_strict_subtype_cache_size` | Size of strict subtype cache |
+| `tsc_io_read_time_seconds` | Time spent reading files (seconds) |
+| `tsc_parse_time_seconds` | Time spent parsing (seconds) |
+| `tsc_resolve_module_time_seconds` | Time spent resolving modules (seconds) |
+| `tsc_resolve_type_reference_time_seconds` | Time spent resolving type references (seconds) |
+| `tsc_resolve_library_time_seconds` | Time spent resolving libraries (seconds) |
+| `tsc_program_time_seconds` | Time spent on program construction (seconds) |
+| `tsc_bind_time_seconds` | Time spent binding (seconds) |
+| `tsc_check_time_seconds` | Time spent type checking (seconds) |
+| `tsc_print_time_seconds` | Time spent printing (seconds) |
+| `tsc_emit_time_seconds` | Time spent emitting output (seconds) |
+| `tsc_total_time_seconds` | Total compilation time (seconds) |
+
 ## GitHub
 
 Collects pull request metrics directly from GitHub, including open PRs and lead time.
