@@ -281,7 +281,7 @@ Collects code statistics from [SCC](https://github.com/boyter/scc), including li
 Generate the required file:
 
 ```bash
-scc -f json -o scc.output.json
+scc -f json > scc.output.json
 ```
 
 ## Jest
