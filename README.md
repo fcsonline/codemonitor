@@ -131,6 +131,26 @@ You can generate the `scc.output.json` file with this example command:
 scc -f json scc.output.json
 ```
 
+## TSC
+
+Collect multiple metrics from TypeScript compiler diagnostics.
+
+**Requirements / Setup**:
+
+You need a `tsc.output.txt` file present in the current folder.
+
+You can generate the `tsc.output.txt` file with this example command:
+
+```
+pnpm tsc --extendedDiagnostics --incremental false > tsc.output.txt
+```
+
+Or using npm:
+
+```
+npm run tsc -- --extendedDiagnostics --incremental false > tsc.output.txt
+```
+
 # Providers
 
 ## Console
