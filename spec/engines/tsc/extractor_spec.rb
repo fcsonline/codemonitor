@@ -70,7 +70,7 @@ RSpec.describe Engines::Tsc::Extractor do
       tsc_program_time_seconds: 6.54,
       tsc_bind_time_seconds: 2.36,
       tsc_check_time_seconds: 54.45,
-      tsc_print_time_time_seconds: 0.0,
+      tsc_print_time_seconds: 0.0,
       tsc_emit_time_seconds: 0.0,
       tsc_total_time_seconds: 63.35
     )

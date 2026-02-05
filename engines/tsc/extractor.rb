@@ -28,12 +28,10 @@ module Engines
         tsc_program_time_seconds
         tsc_bind_time_seconds
         tsc_check_time_seconds
-        tsc_print_time_time_seconds
+        tsc_print_time_seconds
         tsc_emit_time_seconds
         tsc_total_time_seconds
       ].freeze
-
-      def initialize; end
 
       def call(provider)
         metrics = METRICS.map do |metric|
@@ -169,7 +167,7 @@ module Engines
         extract_time(/^Check time:\s+([\d.]+s)/)
       end
 
-      def tsc_print_time_time_seconds
+      def tsc_print_time_seconds
         extract_time(/^printTime time:\s+([\d.]+s)/)
       end
 
